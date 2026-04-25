@@ -1,1 +1,0 @@
-# Shiai-Culin-ria-Japonesa
