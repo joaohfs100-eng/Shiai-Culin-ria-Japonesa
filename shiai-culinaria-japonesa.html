@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shiai Culinária Japonesa | Rio de Janeiro</title>
+  <meta name="description" content="Shiai Culinária Japonesa - Uma experiência japonesa única em cada detalhe. Sushi, sashimi e temaki fresquíssimos em Marechal Hermes, Rio de Janeiro.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --deep: #111111;
+      --card: #181818;
+      --red: #c0392b;
+      --red-bright: #e74c3c;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --white: #f5f0eb;
+      --gray: #888;
+      --border: rgba(201,168,76,0.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 1.2rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+      backdrop-filter: blur(4px);
+      transition: background 0.4s;
+    }
+    nav.scrolled { background: rgba(10,10,10,0.97); border-bottom-color: var(--border); }
+    .logo { font-family: 'Noto Serif JP', serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 0.12em; color: var(--gold); text-decoration: none; }
+    .logo span { color: var(--white); font-weight: 300; }
+    nav ul { list-style: none; display: flex; gap: 2.2rem; }
+    nav ul a { text-decoration: none; color: var(--white); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.75; transition: opacity 0.3s, color 0.3s; }
+    nav ul a:hover { opacity: 1; color: var(--gold); }
+    .nav-cta { background: var(--red); color: #fff !important; padding: 0.55rem 1.3rem; border-radius: 2px; opacity: 1 !important; transition: background 0.3s !important; }
+    .nav-cta:hover { background: var(--red-bright) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 1.5px; background: var(--white); transition: all 0.3s; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: 
+        linear-gradient(135deg, rgba(192,57,43,0.12) 0%, transparent 50%),
+        linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.7) 60%, rgba(10,10,10,1) 100%);
+      z-index: 1;
+    }
+    /* Japanese wave SVG pattern */
+    .hero-pattern {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30 Q15 10 30 30 Q45 50 60 30' stroke='rgba(201,168,76,0.04)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+      background-size: 60px 60px;
+      z-index: 0;
+    }
+    /* Visual sushi image using CSS art + real gradient */
+    .hero-visual {
+      position: absolute; right: -5%; top: 50%; transform: translateY(-50%);
+      width: 55%; max-width: 720px; height: 90vh;
+      z-index: 1;
+      clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    .hero-visual-inner {
+      width: 100%; height: 100%;
+      background: 
+        radial-gradient(ellipse at 40% 50%, rgba(201,168,76,0.15) 0%, transparent 60%),
+        linear-gradient(135deg, #1a0a08 0%, #2d1a10 30%, #1a0f0a 60%, #0a0505 100%);
+      position: relative; overflow: hidden;
+    }
+    /* Decorative circles suggesting food plates */
+    .hero-visual-inner::before {
+      content: '';
+      position: absolute;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      top: 20%; left: 20%;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+    .hero-visual-inner::after {
+      content: '';
+      position: absolute;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(192,57,43,0.1) 0%, transparent 70%);
+      bottom: 25%; right: 15%;
+      border: 1px solid rgba(192,57,43,0.2);
+    }
+    /* Kanji decoration */
+    .kanji-deco {
+      position: absolute; right: 3%; top: 8%;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 9rem; line-height: 1;
+      color: rgba(201,168,76,0.06);
+      writing-mode: vertical-rl;
+      letter-spacing: 0.3em;
+      z-index: 2;
+      user-select: none;
+    }
+    .hero-content {
+      position: relative; z-index: 3;
+      max-width: 600px;
+      padding: 0 2.5rem;
+      animation: heroFadeUp 1.2s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+      animation: heroFadeUp 1.2s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-tag::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300; line-height: 1.05;
+      margin-bottom: 0.3rem;
+      animation: heroFadeUp 1.2s 0.3s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-family: 'Noto Serif JP', serif; font-size: 1rem; font-weight: 300;
+      color: rgba(245,240,235,0.5); letter-spacing: 0.18em;
+      margin-bottom: 1rem;
+      animation: heroFadeUp 1.2s 0.35s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-tagline {
+      font-size: 1rem; color: rgba(245,240,235,0.75); margin-bottom: 2.8rem; line-height: 1.8;
+      animation: heroFadeUp 1.2s 0.45s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-tagline strong { color: var(--gold-light); font-weight: 400; }
+    .hero-btns {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: heroFadeUp 1.2s 0.55s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .btn-primary {
+      background: var(--red); color: #fff;
+      padding: 1rem 2.2rem; border-radius: 2px;
+      text-decoration: none; font-size: 0.72rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 8px 30px rgba(192,57,43,0.4);
+    }
+    .btn-primary:hover { background: var(--red-bright); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(192,57,43,0.5); }
+    .btn-outline {
+      border: 1px solid rgba(201,168,76,0.5); color: var(--gold);
+      padding: 1rem 2.2rem; border-radius: 2px;
+      text-decoration: none; font-size: 0.72rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+    .scroll-indicator {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      animation: heroFadeUp 1.2s 0.8s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .scroll-indicator span { font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,240,235,0.4); text-transform: uppercase; }
+    .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(201,168,76,0.6), transparent); animation: scrollLine 2s ease-in-out infinite; }
+    @keyframes scrollLine { 0%,100% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(0.5); opacity: 0.5; } }
+
+    /* ── SECTION BASE ── */
+    section { padding: 7rem 2.5rem; }
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .section-tag::before { content: ''; width: 25px; height: 1px; background: var(--gold); }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 300; line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    h2 em { font-style: italic; color: var(--gold); }
+    .divider { width: 60px; height: 1px; background: linear-gradient(to right, var(--gold), transparent); margin: 1.5rem 0; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* ── SOBRE ── */
+    #sobre { background: var(--deep); }
+    .sobre-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+    }
+    .sobre-visual {
+      position: relative;
+    }
+    .sobre-img-frame {
+      width: 100%; aspect-ratio: 4/5;
+      background: var(--card);
+      border: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    /* Stylized sushi visual */
+    .sobre-img-frame::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: 
+        radial-gradient(ellipse at 30% 40%, rgba(192,57,43,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 70%, rgba(201,168,76,0.15) 0%, transparent 50%),
+        linear-gradient(135deg, #1a0e08, #0d0808);
+    }
+    .sobre-img-frame::after {
+      content: '試合';
+      font-family: 'Noto Serif JP', serif;
+      font-size: 7rem; line-height: 1;
+      color: rgba(201,168,76,0.08);
+      position: absolute; right: 1rem; bottom: 1rem;
+      writing-mode: vertical-rl;
+    }
+    .sobre-img-accent {
+      position: absolute; bottom: -2rem; right: -2rem;
+      width: 140px; height: 140px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.3rem;
+    }
+    .sobre-img-accent .num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--gold); line-height: 1; }
+    .sobre-img-accent .label { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,235,0.5); text-align: center; }
+    .sobre-text p { font-size: 0.92rem; line-height: 2; color: rgba(245,240,235,0.75); margin-bottom: 1.2rem; }
+    .sobre-badges { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+    .badge {
+      border: 1px solid var(--border);
+      padding: 0.6rem 1.2rem;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── CARDÁPIO ── */
+    #cardapio { background: var(--black); }
+    .menu-tabs {
+      display: flex; gap: 0; margin-bottom: 3.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 0.9rem 2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(245,240,235,0.45);
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+      margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-btn:hover { color: rgba(245,240,235,0.8); }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5px; }
+    .menu-grid.hidden { display: none; }
+    .menu-card {
+      background: var(--card);
+      border: 1px solid rgba(201,168,76,0.06);
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+      cursor: pointer;
+    }
+    .menu-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--border); }
+    .menu-card-img {
+      width: 100%; aspect-ratio: 4/3;
+      position: relative; overflow: hidden;
+    }
+    .menu-card-img-inner {
+      width: 100%; height: 100%;
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .menu-card:hover .menu-card-img-inner { transform: scale(1.06); }
+    /* Food visual backgrounds */
+    .food-salmon { background: linear-gradient(135deg, #3d1c14 0%, #5c2a1e 30%, #8b4a35 60%, #3d1c14 100%); position: relative; }
+    .food-salmon::after { content: '🍣'; font-size: 4rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)); }
+    .food-sashimi { background: linear-gradient(135deg, #1a1228 0%, #2d1f3d 30%, #3d2a50 60%, #1a1228 100%); position: relative; }
+    .food-sashimi::after { content: '🐟'; font-size: 4rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)); }
+    .food-temaki { background: linear-gradient(135deg, #14291a 0%, #1e3d26 30%, #2a5233 60%, #14291a 100%); position: relative; }
+    .food-temaki::after { content: '🌊'; font-size: 4rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)); }
+    .food-combo { background: linear-gradient(135deg, #1a0808 0%, #2d1212 30%, #3d1818 60%, #1a0808 100%); position: relative; }
+    .food-combo::after { content: '🍱'; font-size: 4rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)); }
+    .food-yakisoba { background: linear-gradient(135deg, #1a1408 0%, #2d2210 30%, #3d3018 60%, #1a1408 100%); position: relative; }
+    .food-yakisoba::after { content: '🍜'; font-size: 4rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)); }
+
+    /* Real photo cards using uploaded images styled as beautiful food photos */
+    .food-photo-1 {
+      background: #1a0e08;
+      position: relative;
+      overflow: hidden;
+    }
+    .food-photo-1 .photo-overlay {
+      position: absolute; inset: 0;
+      background: 
+        linear-gradient(to bottom, transparent 40%, rgba(10,10,10,0.8) 100%),
+        radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.15) 0%, transparent 60%);
+    }
+
+    .menu-card-body { padding: 1.4rem; }
+    .menu-card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 0.4rem; }
+    .menu-card-desc { font-size: 0.75rem; color: rgba(245,240,235,0.5); line-height: 1.7; margin-bottom: 1rem; }
+    .menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .menu-price { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--gold); }
+    .menu-tag-badge { font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); border: 1px solid rgba(192,57,43,0.3); padding: 0.2rem 0.6rem; border-radius: 1px; }
+
+    /* ── GALERIA ── */
+    #galeria { background: var(--deep); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: repeat(3, 200px);
+      gap: 3px;
+      margin-top: 3rem;
+    }
+    .g-item { overflow: hidden; position: relative; cursor: pointer; }
+    .g-item:hover .g-overlay { opacity: 1; }
+    .g-item:nth-child(1) { grid-column: 1/6; grid-row: 1/3; }
+    .g-item:nth-child(2) { grid-column: 6/9; grid-row: 1/2; }
+    .g-item:nth-child(3) { grid-column: 9/13; grid-row: 1/3; }
+    .g-item:nth-child(4) { grid-column: 6/9; grid-row: 2/3; }
+    .g-item:nth-child(5) { grid-column: 1/5; grid-row: 3/4; }
+    .g-item:nth-child(6) { grid-column: 5/9; grid-row: 3/4; }
+    .g-item:nth-child(7) { grid-column: 9/13; grid-row: 3/4; }
+    .g-bg { width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .g-item:hover .g-bg { transform: scale(1.08); }
+    .g-overlay {
+      position: absolute; inset: 0;
+      background: rgba(192,57,43,0.3);
+      opacity: 0; transition: opacity 0.3s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .g-overlay-icon { font-size: 1.5rem; color: #fff; }
+
+    /* Gallery visuals */
+    .gv1 { background: linear-gradient(135deg, #2d1a10, #5c3420, #3d1c14); }
+    .gv2 { background: linear-gradient(135deg, #0d1a10, #1a3020, #0d1a10); }
+    .gv3 { background: linear-gradient(135deg, #1a1228, #2d1f3d, #1a1228); }
+    .gv4 { background: linear-gradient(135deg, #1a0808, #2d1010, #1a0808); }
+    .gv5 { background: linear-gradient(135deg, #14291a, #224030, #14291a); }
+    .gv6 { background: linear-gradient(135deg, #1a1408, #302510, #1a1408); }
+    .gv7 { background: linear-gradient(135deg, #1a0e0e, #2d1818, #1a0e0e); }
+
+    /* ── RESERVAS ── */
+    #reservas { background: var(--black); }
+    .reservas-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .reservas-info h2 { margin-bottom: 0.8rem; }
+    .reservas-info p { font-size: 0.9rem; line-height: 1.9; color: rgba(245,240,235,0.65); margin-bottom: 2rem; }
+    .info-items { display: flex; flex-direction: column; gap: 1.2rem; }
+    .info-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .info-icon { width: 40px; height: 40px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .info-item-text .label { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
+    .info-item-text .val { font-size: 0.88rem; color: rgba(245,240,235,0.8); }
+    .reserva-form { background: var(--card); border: 1px solid var(--border); padding: 2.5rem; }
+    .reserva-form h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
+    .form-group label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,235,0.5); }
+    .form-group input, .form-group select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      color: var(--white);
+      padding: 0.85rem 1rem;
+      font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+      outline: none; transition: border-color 0.3s;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--gold); }
+    .form-group select option { background: #181818; }
+    .btn-submit {
+      width: 100%; background: var(--red); color: #fff;
+      border: none; padding: 1.1rem; cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-submit:hover { background: var(--red-bright); transform: translateY(-1px); }
+
+    /* ── MAPA ── */
+    #localizacao { background: var(--deep); }
+    .map-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+    .map-info { display: flex; flex-direction: column; gap: 2rem; }
+    .map-detail { border-left: 2px solid var(--gold); padding-left: 1.2rem; }
+    .map-detail .map-label { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .map-detail .map-val { font-size: 0.9rem; line-height: 1.7; color: rgba(245,240,235,0.8); }
+    .map-frame {
+      width: 100%; aspect-ratio: 16/9;
+      border: 1px solid var(--border);
+      overflow: hidden; position: relative;
+    }
+    .map-frame iframe { width: 100%; height: 100%; border: none; filter: grayscale(0.5) invert(0.9) hue-rotate(170deg) brightness(0.85); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #050505;
+      border-top: 1px solid var(--border);
+      padding: 4rem 2.5rem 2rem;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
+    .footer-brand .logo-footer { font-family: 'Noto Serif JP', serif; font-size: 1.4rem; color: var(--gold); letter-spacing: 0.1em; display: block; margin-bottom: 1rem; }
+    .footer-brand p { font-size: 0.82rem; line-height: 1.9; color: rgba(245,240,235,0.45); max-width: 280px; }
+    .footer-col h4 { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-col ul li a { text-decoration: none; color: rgba(245,240,235,0.45); font-size: 0.82rem; transition: color 0.3s; }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-col ul li { color: rgba(245,240,235,0.45); font-size: 0.82rem; }
+    .social-links { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+    .social-link {
+      width: 38px; height: 38px; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(245,240,235,0.45); text-decoration: none; font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(201,168,76,0.08); padding-top: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom p { font-size: 0.72rem; color: rgba(245,240,235,0.25); }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.8rem;
+    }
+    .wa-bubble {
+      background: rgba(10,10,10,0.9);
+      border: 1px solid rgba(37,211,102,0.3);
+      color: var(--white); font-size: 0.75rem;
+      padding: 0.7rem 1rem; border-radius: 2px;
+      opacity: 0; transform: translateX(10px);
+      transition: all 0.3s;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .wa-float:hover .wa-bubble { opacity: 1; transform: translateX(0); }
+    .wa-btn {
+      width: 58px; height: 58px; border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; box-shadow: 0 8px 30px rgba(37,211,102,0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+      font-size: 1.6rem;
+    }
+    .wa-btn:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 12px 40px rgba(37,211,102,0.5); }
+
+    /* ── ANIMATIONS ON SCROLL ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      nav ul.open { display: flex; flex-direction: column; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,10,10,0.98); align-items: center; justify-content: center; gap: 2rem; z-index: 99; }
+      nav ul.open a { font-size: 1rem; }
+      .hero-visual { display: none; }
+      .hero-content { text-align: center; }
+      .hero-btns { justify-content: center; }
+      .sobre-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .sobre-img-frame { aspect-ratio: 16/9; }
+      .reservas-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .map-inner { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .g-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4/3; height: auto; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 5rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr; }
+      .menu-tabs { overflow-x: auto; }
+      .tab-btn { white-space: nowrap; }
+    }
+
+    /* ── HERO PLATES CSS ART ── */
+    .plate-visual {
+      position: absolute; z-index: 2;
+      left: 35%; top: 50%; transform: translate(-50%, -50%);
+    }
+    .plate {
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #2a2a2a, #111);
+      box-shadow: 0 20px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative; overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.1);
+    }
+    .sushi-row {
+      position: absolute; display: flex; gap: 6px;
+      left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-15deg);
+    }
+    .sushi-piece {
+      width: 35px; height: 52px; border-radius: 50% 50% 40% 40%;
+      position: relative; overflow: hidden;
+    }
+    .sp-rice { background: linear-gradient(to bottom, #f5f0e8, #ddd6c8); }
+    .sp-salmon { background: linear-gradient(135deg, #e8855a, #c96030, #e8855a); }
+    .sp-tuna { background: linear-gradient(135deg, #8b1a3a, #c02850, #8b1a3a); }
+    .sp-cucumber { background: linear-gradient(135deg, #4a7c40, #6aab5a, #4a7c40); }
+
+    /* Animated floating particles */
+    .particle {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      animation: floatParticle linear infinite;
+    }
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="logo">試合 <span>Shiai</span></a>
+  <ul id="navmenu">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#cardapio">Cardápio</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#localizacao">Localização</a></li>
+    <li><a href="#reservas" class="nav-cta">Reservar</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-pattern"></div>
+  <div class="kanji-deco">試合料理</div>
+  <div class="hero-bg"></div>
+
+  <!-- Animated particles -->
+  <div id="particles"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Culinária Japonesa Autêntica</div>
+    <h1>Shiai<br><em>Culinária</em><br>Japonesa</h1>
+    <p class="hero-sub">試合 · Rio de Janeiro</p>
+    <p class="hero-tagline">Uma experiência japonesa <strong>única</strong> em cada detalhe.<br>Frescor, tradição e sofisticação em cada prato.</p>
+    <div class="hero-btns">
+      <a href="#reservas" class="btn-primary">Reservar agora</a>
+      <a href="#cardapio" class="btn-outline">Ver cardápio</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-inner">
+      <div class="sobre-visual reveal">
+        <div class="sobre-img-frame">
+          <!-- Elegant Japanese restaurant ambiance visual -->
+          <svg width="100%" height="100%" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <defs>
+              <radialGradient id="bg1" cx="40%" cy="40%">
+                <stop offset="0%" stop-color="#3d1c14" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/>
+              </radialGradient>
+              <radialGradient id="glow1" cx="50%" cy="50%">
+                <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect width="400" height="500" fill="url(#bg1)"/>
+            <!-- Plate -->
+            <ellipse cx="200" cy="260" rx="160" ry="120" fill="#1a1a1a" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+            <ellipse cx="200" cy="255" rx="140" ry="105" fill="#141414"/>
+            <!-- Sashimi pieces -->
+            <ellipse cx="160" cy="240" rx="35" ry="22" fill="#e8855a" opacity="0.9"/>
+            <ellipse cx="155" cy="238" rx="30" ry="18" fill="#c96030"/>
+            <ellipse cx="205" cy="235" rx="35" ry="22" fill="#8b1a3a" opacity="0.9"/>
+            <ellipse cx="200" cy="233" rx="30" ry="18" fill="#c02850"/>
+            <ellipse cx="248" cy="240" rx="35" ry="22" fill="#e8855a" opacity="0.9"/>
+            <ellipse cx="243" cy="238" rx="30" ry="18" fill="#d4704a"/>
+            <!-- Garnish -->
+            <path d="M160 220 Q175 200 190 215" stroke="#6aab5a" stroke-width="3" fill="none"/>
+            <circle cx="180" cy="195" r="5" fill="#4a7c40"/>
+            <!-- Chopsticks -->
+            <rect x="270" y="180" width="3" height="120" rx="1.5" fill="rgba(201,168,76,0.5)" transform="rotate(15,271.5,240)"/>
+            <rect x="280" y="180" width="3" height="120" rx="1.5" fill="rgba(201,168,76,0.4)" transform="rotate(17,281.5,240)"/>
+            <!-- Soy sauce dish -->
+            <ellipse cx="120" cy="310" rx="30" ry="20" fill="#0a0a0a" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+            <ellipse cx="120" cy="308" rx="22" ry="14" fill="#1a0a0a"/>
+            <!-- Glow -->
+            <ellipse cx="200" cy="260" rx="120" ry="80" fill="url(#glow1)"/>
+            <!-- Kanji -->
+            <text x="350" y="450" font-family="serif" font-size="80" fill="rgba(201,168,76,0.06)" writing-mode="vertical-rl">試合</text>
+          </svg>
+        </div>
+        <div class="sobre-img-accent">
+          <span class="num">4.2</span>
+          <span class="label">Avaliação<br>Google</span>
+        </div>
+      </div>
+      <div class="sobre-text">
+        <div class="section-tag">Nossa história</div>
+        <h2>Onde a <em>tradição</em><br>encontra o sabor</h2>
+        <div class="divider"></div>
+        <p>O Shiai Culinária Japonesa nasceu da paixão pela culinária oriental e do desejo de trazer ao Rio de Janeiro uma experiência gastronômica japonesa autêntica, que vai além do simples ato de comer.</p>
+        <p>Cada prato é preparado com ingredientes frescos, selecionados diariamente, seguindo técnicas tradicionais do Japão aliadas a um toque contemporâneo que encanta todos os paladares.</p>
+        <p>Nosso ambiente acolhedor, com iluminação suave e decoração inspirada na estética japonesa, cria o cenário perfeito para momentos especiais — seja um jantar romântico, uma reunião de negócios ou um encontro entre amigos.</p>
+        <div class="sobre-badges">
+          <span class="badge">Ingredientes Frescos</span>
+          <span class="badge">Chef Especializado</span>
+          <span class="badge">Ambiente Sofisticado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARDÁPIO -->
+<section id="cardapio">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">O que servimos</div>
+      <h2>Nosso <em>Cardápio</em></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="menu-tabs reveal reveal-delay-1">
+      <button class="tab-btn active" onclick="showTab('sushi', this)">Sushi</button>
+      <button class="tab-btn" onclick="showTab('sashimi', this)">Sashimi</button>
+      <button class="tab-btn" onclick="showTab('temaki', this)">Temaki</button>
+      <button class="tab-btn" onclick="showTab('combos', this)">Combos</button>
+    </div>
+
+    <!-- SUSHI TAB -->
+    <div id="tab-sushi" class="menu-grid">
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="background:linear-gradient(135deg,#2d1a10,#5c3018,#2d1a10);position:relative;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#1a0e08"/>
+              <rect x="20" y="60" width="260" height="105" rx="8" fill="#0d0808"/>
+              <ellipse cx="90" cy="112" rx="45" ry="28" fill="#f5f0e8"/><ellipse cx="90" cy="105" rx="38" ry="20" fill="#e8855a"/><ellipse cx="88" cy="103" rx="32" ry="16" fill="#c96030"/>
+              <ellipse cx="150" cy="112" rx="45" ry="28" fill="#f5f0e8"/><ellipse cx="150" cy="105" rx="38" ry="20" fill="#8b1a3a"/><ellipse cx="148" cy="103" rx="32" ry="16" fill="#c02850"/>
+              <ellipse cx="210" cy="112" rx="45" ry="28" fill="#f5f0e8"/><ellipse cx="210" cy="105" rx="38" ry="20" fill="#e8855a"/><ellipse cx="208" cy="103" rx="32" ry="16" fill="#d4704a"/>
+              <circle cx="90" cy="103" r="4" fill="#4a7c40"/><circle cx="150" cy="103" r="4" fill="#4a7c40"/><circle cx="210" cy="103" r="4" fill="#4a7c40"/>
+              <rect x="255" y="70" width="5" height="80" rx="2.5" fill="rgba(201,168,76,0.6)" transform="rotate(10,257.5,110)"/>
+              <rect x="265" y="70" width="5" height="80" rx="2.5" fill="rgba(201,168,76,0.4)" transform="rotate(12,267.5,110)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Salmon Nigiri</div>
+          <div class="menu-card-desc">Tradicional nigiri com salmão fresco sobre arroz temperado. Delicadeza e sabor em cada mordida.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 28</span><span class="menu-tag-badge">6 peças</span></div>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#0d0808;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#0d0a12"/>
+              <rect x="20" y="50" width="260" height="125" rx="8" fill="#0a0810"/>
+              <!-- Uramaki roll cross sections -->
+              <g transform="translate(40,112)"><circle r="28" fill="#f5f0e8"/><circle r="22" fill="#1a0a08"/><circle r="14" fill="#f5f0e8"/><circle r="8" fill="#e8855a"/><circle r="3" fill="#4a7c40"/></g>
+              <g transform="translate(100,112)"><circle r="28" fill="#f5f0e8"/><circle r="22" fill="#1a0a08"/><circle r="14" fill="#f5f0e8"/><circle r="8" fill="#8b1a3a"/><circle r="3" fill="#f5f0e8"/></g>
+              <g transform="translate(160,112)"><circle r="28" fill="#f5f0e8"/><circle r="22" fill="#1a0a08"/><circle r="14" fill="#f5f0e8"/><circle r="8" fill="#e8855a"/><circle r="3" fill="#4a7c40"/></g>
+              <g transform="translate(220,112)"><circle r="28" fill="#f5f0e8"/><circle r="22" fill="#1a0a08"/><circle r="14" fill="#f5f0e8"/><circle r="8" fill="#8b1a3a"/><circle r="3" fill="#f5f0e8"/></g>
+              <g transform="translate(260,112)"><circle r="28" fill="#f5f0e8"/><circle r="22" fill="#1a0a08"/><circle r="14" fill="#f5f0e8"/><circle r="8" fill="#e8855a"/><circle r="3" fill="#4a7c40"/></g>
+              <!-- Masago topping -->
+              <ellipse cx="150" cy="58" rx="120" ry="8" fill="#e8a040" opacity="0.7"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Philadelphia Roll</div>
+          <div class="menu-card-desc">Cream cheese, salmão e pepino envoltos em arroz e alga nori. Combinação irresistível.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 35</span><span class="menu-tag-badge">8 peças</span></div>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#0d0808;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#1a0e08"/>
+              <!-- Crispy roll -->
+              <rect x="30" y="65" width="240" height="95" rx="12" fill="#2d1a08"/>
+              <rect x="30" y="65" width="240" height="95" rx="12" fill="url(#goldGrad)" opacity="0.7"/>
+              <defs><linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c9a84c" stop-opacity="0.3"/><stop offset="100%" stop-color="#8b6520" stop-opacity="0.1"/></linearGradient></defs>
+              <!-- Crispy texture lines -->
+              <line x1="30" y1="80" x2="270" y2="80" stroke="rgba(201,168,76,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="30" y1="95" x2="270" y2="95" stroke="rgba(201,168,76,0.1)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="30" y1="110" x2="270" y2="110" stroke="rgba(201,168,76,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="30" y1="125" x2="270" y2="125" stroke="rgba(201,168,76,0.1)" stroke-width="1" stroke-dasharray="4,4"/>
+              <!-- Cuts -->
+              <line x1="90" y1="65" x2="90" y2="160" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <line x1="150" y1="65" x2="150" y2="160" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <line x1="210" y1="65" x2="210" y2="160" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <!-- Sauce drizzle -->
+              <path d="M50 160 Q80 175 110 162 Q140 150 170 165 Q200 178 230 160" stroke="#c9a84c" stroke-width="2" fill="none" opacity="0.7"/>
+              <path d="M40 170 Q70 158 100 172 Q130 185 160 170" stroke="#c02850" stroke-width="2" fill="none" opacity="0.6"/>
+              <!-- Green onion -->
+              <circle cx="60" cy="75" r="4" fill="#6aab5a" opacity="0.8"/>
+              <circle cx="120" cy="72" r="3" fill="#6aab5a" opacity="0.8"/>
+              <circle cx="180" cy="78" r="4" fill="#6aab5a" opacity="0.8"/>
+              <circle cx="240" cy="73" r="3" fill="#6aab5a" opacity="0.8"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Hot Roll Crispy</div>
+          <div class="menu-card-desc">Roll empanado e frito com recheio de salmão e cream cheese, finalizado com molho especial da casa.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 42</span><span class="menu-tag-badge">Chef's Pick</span></div>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-3">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#080d08;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#080e08"/>
+              <!-- Rainbow roll -->
+              <rect x="20" y="70" width="260" height="85" rx="6" fill="#0d0d0d" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+              <!-- Rainbow top with different fish -->
+              <ellipse cx="55" cy="80" rx="28" ry="14" fill="#e8855a"/>
+              <ellipse cx="100" cy="80" rx="28" ry="14" fill="#8b1a3a"/>
+              <ellipse cx="145" cy="80" rx="28" ry="14" fill="#4a7c5a"/>
+              <ellipse cx="190" cy="80" rx="28" ry="14" fill="#f5c842"/>
+              <ellipse cx="235" cy="80" rx="28" ry="14" fill="#e8855a"/>
+              <!-- White rice base visible -->
+              <rect x="20" y="90" width="260" height="55" rx="4" fill="#e8e0d0" opacity="0.1"/>
+              <!-- Nori layer -->
+              <rect x="20" y="120" width="260" height="35" rx="4" fill="#0d1a0d" opacity="0.8"/>
+              <!-- Cuts -->
+              <line x1="83" y1="70" x2="83" y2="155" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <line x1="124" y1="70" x2="124" y2="155" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <line x1="165" y1="70" x2="165" y2="155" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <line x1="206" y1="70" x2="206" y2="155" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <line x1="247" y1="70" x2="247" y2="155" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Rainbow Roll</div>
+          <div class="menu-card-desc">Uramaki coberto com fatias alternadas de salmão, atum e peixe branco. Uma obra de arte comestível.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 48</span><span class="menu-tag-badge">Premium</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SASHIMI TAB -->
+    <div id="tab-sashimi" class="menu-grid hidden">
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#1a0e08;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#1a0e08"/>
+              <ellipse cx="150" cy="130" rx="130" ry="80" fill="#0d0808" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+              <!-- Salmon slices fanned out -->
+              <g transform="translate(70,130) rotate(-20)"><rect width="60" height="90" rx="30" fill="#e8855a" opacity="0.9"/><rect y="5" width="55" height="75" rx="27" fill="#c96030" x="2.5"/></g>
+              <g transform="translate(110,120) rotate(-10)"><rect width="60" height="90" rx="30" fill="#e8855a" opacity="0.9"/><rect y="5" width="55" height="75" rx="27" fill="#d4704a" x="2.5"/></g>
+              <g transform="translate(150,115) rotate(0)"><rect width="60" height="90" rx="30" fill="#e8855a" opacity="0.9"/><rect y="5" width="55" height="75" rx="27" fill="#c96030" x="2.5"/></g>
+              <g transform="translate(190,120) rotate(10)"><rect width="60" height="90" rx="30" fill="#e8855a" opacity="0.9"/><rect y="5" width="55" height="75" rx="27" fill="#d4704a" x="2.5"/></g>
+              <!-- Garnish -->
+              <path d="M60 90 Q80 70 100 85" stroke="#6aab5a" stroke-width="3" fill="none"/>
+              <circle cx="100" cy="85" r="5" fill="#4a7c40"/>
+              <circle cx="72" cy="80" r="3" fill="#4a7c40"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Salmon Sashimi</div>
+          <div class="menu-card-desc">Fatias frescas de salmão premium, cortadas na espessura ideal para realçar o sabor suave e amanteigado.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 45</span><span class="menu-tag-badge">7 fatias</span></div>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#0d0810;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#0d0810"/>
+              <ellipse cx="150" cy="130" rx="130" ry="80" fill="#0a0810" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+              <g transform="translate(70,130) rotate(-20)"><rect width="60" height="90" rx="30" fill="#8b1a3a" opacity="0.9"/><rect y="5" width="55" height="75" rx="27" fill="#c02850" x="2.5"/></g>
+              <g transform="translate(110,120) rotate(-10)"><rect width="60" height="90" rx="30" fill="#8b1a3a" opacity="0.9"/><rect y="5" width="55" height="75" rx="27" fill="#a01e3a" x="2.5"/></g>
+              <g transform="translate(150,115) rotate(0)"><rect width="60" height="90" rx="30" fill="#8b1a3a" opacity="0.9"/><rect y="5" width="55" height="75" rx="27" fill="#c02850" x="2.5"/></g>
+              <g transform="translate(190,120) rotate(10)"><rect width="60" height="90" rx="30" fill="#8b1a3a" opacity="0.9"/><rect y="5" width="55" height="75" rx="27" fill="#a01e3a" x="2.5"/></g>
+              <path d="M60 90 Q80 70 100 85" stroke="#6aab5a" stroke-width="3" fill="none"/>
+              <circle cx="100" cy="85" r="5" fill="#4a7c40"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Tuna Sashimi</div>
+          <div class="menu-card-desc">Atum vermelho cortado em fatias generosas, com textura firme e sabor marcante do oceano.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 52</span><span class="menu-tag-badge">7 fatias</span></div>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner food-salmon" style="position:relative;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#0d1210"/>
+              <ellipse cx="150" cy="130" rx="130" ry="80" fill="#0a0f0d" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+              <!-- Mixed sashimi display -->
+              <g transform="translate(50,115) rotate(-25)"><rect width="55" height="80" rx="27" fill="#e8855a" opacity="0.9"/></g>
+              <g transform="translate(95,108) rotate(-12)"><rect width="55" height="80" rx="27" fill="#8b1a3a" opacity="0.9"/></g>
+              <g transform="translate(140,105) rotate(0)"><rect width="55" height="80" rx="27" fill="#d4a840" opacity="0.8"/></g>
+              <g transform="translate(185,108) rotate(12)"><rect width="55" height="80" rx="27" fill="#e8855a" opacity="0.9"/></g>
+              <g transform="translate(228,115) rotate(25)"><rect width="55" height="80" rx="27" fill="#8b1a3a" opacity="0.9"/></g>
+              <!-- Daikon -->
+              <rect x="70" y="160" width="160" height="12" rx="4" fill="#f5f0e8" opacity="0.15"/>
+              <path d="M55 80 Q80 60 105 78" stroke="#6aab5a" stroke-width="3" fill="none"/>
+              <circle cx="105" cy="78" r="6" fill="#4a7c40"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Sashimi Misto</div>
+          <div class="menu-card-desc">Seleção especial com salmão, atum e peixe branco. O melhor do oceano em um só prato.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 68</span><span class="menu-tag-badge">15 fatias</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEMAKI TAB -->
+    <div id="tab-temaki" class="menu-grid hidden">
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#0d1208;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#0a1008"/>
+              <!-- Temaki cone -->
+              <polygon points="80,190 220,190 160,50" fill="#0d1a0d"/>
+              <polygon points="85,190 215,190 158,55" fill="#1a3020"/>
+              <!-- Filling visible at top -->
+              <ellipse cx="158" cy="65" rx="35" ry="22" fill="#e8855a" opacity="0.8"/>
+              <circle cx="150" cy="62" r="8" fill="#f5f0e8" opacity="0.4"/>
+              <circle cx="165" cy="60" r="5" fill="#6aab5a"/>
+              <circle cx="155" cy="58" r="4" fill="#c96030"/>
+              <!-- Sesame seeds on nori -->
+              <circle cx="120" cy="140" r="2" fill="rgba(245,240,235,0.3)"/>
+              <circle cx="145" cy="155" r="2" fill="rgba(245,240,235,0.3)"/>
+              <circle cx="170" cy="145" r="2" fill="rgba(245,240,235,0.3)"/>
+              <circle cx="195" cy="160" r="2" fill="rgba(245,240,235,0.3)"/>
+              <circle cx="140" cy="130" r="1.5" fill="rgba(245,240,235,0.25)"/>
+              <circle cx="175" cy="135" r="1.5" fill="rgba(245,240,235,0.25)"/>
+              <!-- Nori texture lines -->
+              <line x1="100" y1="80" x2="220" y2="185" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <line x1="110" y1="70" x2="210" y2="185" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Temaki Salmão</div>
+          <div class="menu-card-desc">Cone de alga nori recheado com salmão fresco, cream cheese e cebolinha. Feito na hora, servido crocante.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 25</span><span class="menu-tag-badge">Unidade</span></div>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#100a08;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#100a08"/>
+              <polygon points="80,190 220,190 160,50" fill="#1a0d08"/>
+              <polygon points="85,190 215,190 158,55" fill="#2d1810"/>
+              <ellipse cx="158" cy="65" rx="35" ry="22" fill="#8b1a3a" opacity="0.9"/>
+              <ellipse cx="155" cy="62" rx="28" ry="15" fill="#c02850" opacity="0.8"/>
+              <circle cx="165" cy="60" r="5" fill="#6aab5a"/>
+              <circle cx="152" cy="58" r="4" fill="#f5f0e8" opacity="0.5"/>
+              <circle cx="120" cy="140" r="2" fill="rgba(245,240,235,0.3)"/>
+              <circle cx="145" cy="155" r="2" fill="rgba(245,240,235,0.3)"/>
+              <circle cx="170" cy="145" r="2" fill="rgba(245,240,235,0.3)"/>
+              <circle cx="195" cy="160" r="2" fill="rgba(245,240,235,0.3)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Temaki Atum</div>
+          <div class="menu-card-desc">Cone de nori com atum vermelho, abacate cremoso e um toque de wasabi. Sabor intenso e marcante.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 28</span><span class="menu-tag-badge">Unidade</span></div>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#0a0a0f;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#0a0a0f"/>
+              <polygon points="80,190 220,190 160,50" fill="#0d0d18"/>
+              <polygon points="85,190 215,190 158,55" fill="#181828"/>
+              <ellipse cx="158" cy="65" rx="35" ry="22" fill="#c9a84c" opacity="0.8"/>
+              <circle cx="155" cy="60" r="10" fill="#e8a040" opacity="0.7"/>
+              <circle cx="165" cy="62" r="7" fill="#f5c842" opacity="0.6"/>
+              <circle cx="150" cy="58" r="5" fill="#6aab5a"/>
+              <circle cx="120" cy="140" r="2" fill="rgba(245,240,235,0.3)"/>
+              <circle cx="145" cy="155" r="2" fill="rgba(245,240,235,0.3)"/>
+              <circle cx="170" cy="145" r="2" fill="rgba(245,240,235,0.3)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Temaki Especial</div>
+          <div class="menu-card-desc">Combinação exclusiva com camarão grelhado, manga e molho especial da casa. Imperdível.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 32</span><span class="menu-tag-badge">Chef's Pick</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMBOS TAB -->
+    <div id="tab-combos" class="menu-grid hidden">
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#0d0a0a;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#0d0a0a"/>
+              <!-- Bento box -->
+              <rect x="20" y="30" width="260" height="165" rx="8" fill="#111" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+              <line x1="150" y1="30" x2="150" y2="195" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+              <line x1="20" y1="112" x2="280" y2="112" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+              <!-- Sushi section -->
+              <ellipse cx="85" cy="70" rx="30" ry="18" fill="#f5f0e8" opacity="0.1"/><ellipse cx="85" cy="65" rx="22" ry="12" fill="#e8855a" opacity="0.8"/>
+              <ellipse cx="115" cy="75" rx="30" ry="18" fill="#f5f0e8" opacity="0.1"/><ellipse cx="115" cy="70" rx="22" ry="12" fill="#8b1a3a" opacity="0.8"/>
+              <!-- Rice section -->
+              <ellipse cx="215" cy="72" rx="50" ry="35" fill="#f5f0e8" opacity="0.08"/>
+              <circle cx="215" cy="68" r="18" fill="#f5f0e8" opacity="0.12"/>
+              <circle cx="215" cy="68" r="10" fill="#e8a040" opacity="0.6"/>
+              <!-- Salad section -->
+              <ellipse cx="85" cy="150" rx="50" ry="30" fill="#4a7c40" opacity="0.3"/>
+              <circle cx="75" cy="148" r="8" fill="#6aab5a" opacity="0.7"/>
+              <circle cx="95" cy="145" r="6" fill="#4a7c40" opacity="0.7"/>
+              <!-- Sashimi section -->
+              <g transform="translate(185,130) rotate(-10)"><rect width="40" height="60" rx="20" fill="#e8855a" opacity="0.8"/></g>
+              <g transform="translate(215,135) rotate(5)"><rect width="40" height="60" rx="20" fill="#8b1a3a" opacity="0.8"/></g>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Combo Executivo</div>
+          <div class="menu-card-desc">8 peças de sushi variado + 5 fatias de sashimi + 1 temaki + missoshiru. Perfeito para um almoço completo.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 89</span><span class="menu-tag-badge">Mais pedido</span></div>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#0a0d0a;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#0a0d0a"/>
+              <!-- Large wooden board -->
+              <rect x="10" y="40" width="280" height="145" rx="6" fill="#1a1008" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+              <!-- Lots of sushi -->
+              <g transform="translate(25,80)"><ellipse rx="22" ry="14" fill="#f5f0e8" opacity="0.15"/><ellipse cy="-6" rx="16" ry="10" fill="#e8855a" opacity="0.9"/></g>
+              <g transform="translate(70,80)"><ellipse rx="22" ry="14" fill="#f5f0e8" opacity="0.15"/><ellipse cy="-6" rx="16" ry="10" fill="#8b1a3a" opacity="0.9"/></g>
+              <g transform="translate(115,80)"><ellipse rx="22" ry="14" fill="#f5f0e8" opacity="0.15"/><ellipse cy="-6" rx="16" ry="10" fill="#d4a840" opacity="0.8"/></g>
+              <g transform="translate(160,80)"><ellipse rx="22" ry="14" fill="#f5f0e8" opacity="0.15"/><ellipse cy="-6" rx="16" ry="10" fill="#e8855a" opacity="0.9"/></g>
+              <g transform="translate(205,80)"><ellipse rx="22" ry="14" fill="#f5f0e8" opacity="0.15"/><ellipse cy="-6" rx="16" ry="10" fill="#8b1a3a" opacity="0.9"/></g>
+              <g transform="translate(250,80)"><ellipse rx="22" ry="14" fill="#f5f0e8" opacity="0.15"/><ellipse cy="-6" rx="16" ry="10" fill="#e8855a" opacity="0.9"/></g>
+              <!-- Second row rolls -->
+              <g transform="translate(40,140)"><circle r="16" fill="#0d0808"/><circle r="12" fill="#f5f0e8" opacity="0.1"/><circle r="7" fill="#e8855a" opacity="0.8"/></g>
+              <g transform="translate(80,140)"><circle r="16" fill="#0d0808"/><circle r="12" fill="#f5f0e8" opacity="0.1"/><circle r="7" fill="#8b1a3a" opacity="0.8"/></g>
+              <g transform="translate(120,140)"><circle r="16" fill="#0d0808"/><circle r="12" fill="#f5f0e8" opacity="0.1"/><circle r="7" fill="#6aab5a" opacity="0.8"/></g>
+              <g transform="translate(160,140)"><circle r="16" fill="#0d0808"/><circle r="12" fill="#f5f0e8" opacity="0.1"/><circle r="7" fill="#e8855a" opacity="0.8"/></g>
+              <g transform="translate(200,140)"><circle r="16" fill="#0d0808"/><circle r="12" fill="#f5f0e8" opacity="0.1"/><circle r="7" fill="#8b1a3a" opacity="0.8"/></g>
+              <g transform="translate(240,140)"><circle r="16" fill="#0d0808"/><circle r="12" fill="#f5f0e8" opacity="0.1"/><circle r="7" fill="#d4a840" opacity="0.8"/></g>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Combo Premium 30</div>
+          <div class="menu-card-desc">30 peças incluindo nigiris, uramakis e hot rolls variados. Ideal para compartilhar e surpreender.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 145</span><span class="menu-tag-badge">Para 2</span></div>
+        </div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-img">
+          <div class="menu-card-img-inner" style="position:relative;background:#0d0808;">
+            <svg width="100%" height="100%" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+              <rect width="300" height="225" fill="#0d0808"/>
+              <rect x="10" y="25" width="280" height="175" rx="6" fill="#111" stroke="rgba(201,168,76,0.25)" stroke-width="1.5"/>
+              <text x="150" y="45" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(201,168,76,0.6)" letter-spacing="3">COMBO FAMÍLIA</text>
+              <!-- Large spread -->
+              <g transform="translate(40,100)"><ellipse rx="28" ry="18" fill="#f5f0e8" opacity="0.1"/><ellipse cy="-8" rx="20" ry="12" fill="#e8855a" opacity="0.9"/></g>
+              <g transform="translate(90,90)"><ellipse rx="28" ry="18" fill="#f5f0e8" opacity="0.1"/><ellipse cy="-8" rx="20" ry="12" fill="#8b1a3a" opacity="0.9"/></g>
+              <g transform="translate(140,95)"><ellipse rx="28" ry="18" fill="#f5f0e8" opacity="0.1"/><ellipse cy="-8" rx="20" ry="12" fill="#e8855a" opacity="0.9"/></g>
+              <g transform="translate(190,90)"><ellipse rx="28" ry="18" fill="#f5f0e8" opacity="0.1"/><ellipse cy="-8" rx="20" ry="12" fill="#d4a840" opacity="0.8"/></g>
+              <g transform="translate(240,100)"><ellipse rx="28" ry="18" fill="#f5f0e8" opacity="0.1"/><ellipse cy="-8" rx="20" ry="12" fill="#8b1a3a" opacity="0.9"/></g>
+              <!-- Sashimi below -->
+              <g transform="translate(50,155) rotate(-15)"><rect width="45" height="70" rx="22" fill="#e8855a" opacity="0.7"/></g>
+              <g transform="translate(100,150) rotate(-5)"><rect width="45" height="70" rx="22" fill="#8b1a3a" opacity="0.7"/></g>
+              <g transform="translate(160,152) rotate(5)"><rect width="45" height="70" rx="22" fill="#e8855a" opacity="0.7"/></g>
+              <g transform="translate(210,155) rotate(15)"><rect width="45" height="70" rx="22" fill="#8b1a3a" opacity="0.7"/></g>
+            </svg>
+          </div>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Combo Família 50</div>
+          <div class="menu-card-desc">50 peças com toda a variedade do cardápio + 2 temakis + missoshiru para 2. O banquete completo.</div>
+          <div class="menu-card-footer"><span class="menu-price">R$ 220</span><span class="menu-tag-badge">Para 4</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">Nosso espaço</div>
+      <h2>Ambiente & <em>Pratos</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="gallery-grid reveal">
+      <!-- Gallery items with rich SVG food visuals -->
+      <div class="g-item">
+        <div class="g-bg" style="background:linear-gradient(135deg,#2d1a10,#5c2a18,#3d1c14);height:100%;position:relative;">
+          <svg width="100%" height="100%" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <rect width="400" height="400" fill="#1a0e08"/>
+            <ellipse cx="200" cy="210" rx="170" ry="140" fill="#0d0808" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+            <!-- Large sashimi spread -->
+            <g transform="translate(80,180) rotate(-20)"><rect width="60" height="95" rx="30" fill="#e8855a" opacity="0.9"/><rect y="5" x="3" width="54" height="80" rx="27" fill="#c96030"/></g>
+            <g transform="translate(130,165) rotate(-10)"><rect width="60" height="95" rx="30" fill="#8b1a3a" opacity="0.9"/><rect y="5" x="3" width="54" height="80" rx="27" fill="#c02850"/></g>
+            <g transform="translate(180,160) rotate(0)"><rect width="60" height="95" rx="30" fill="#e8855a" opacity="0.9"/><rect y="5" x="3" width="54" height="80" rx="27" fill="#d4704a"/></g>
+            <g transform="translate(230,165) rotate(10)"><rect width="60" height="95" rx="30" fill="#d4a840" opacity="0.8"/><rect y="5" x="3" width="54" height="80" rx="27" fill="#c08030"/></g>
+            <g transform="translate(280,178) rotate(20)"><rect width="60" height="95" rx="30" fill="#8b1a3a" opacity="0.9"/><rect y="5" x="3" width="54" height="80" rx="27" fill="#a01e3a"/></g>
+            <!-- Radish garnish -->
+            <ellipse cx="200" cy="295" rx="130" ry="18" fill="#f5f0e8" opacity="0.06"/>
+            <!-- Chopsticks -->
+            <rect x="310" y="120" width="4" height="150" rx="2" fill="rgba(201,168,76,0.5)" transform="rotate(15,312,195)"/>
+            <rect x="325" y="120" width="4" height="150" rx="2" fill="rgba(201,168,76,0.35)" transform="rotate(18,327,195)"/>
+            <!-- Gold rim plate highlight -->
+            <ellipse cx="200" cy="210" rx="170" ry="140" fill="none" stroke="rgba(201,168,76,0.12)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="g-overlay"><span class="g-overlay-icon">🔍</span></div>
+      </div>
+      <div class="g-item">
+        <div class="g-bg" style="background:#0d1208;height:100%;position:relative;">
+          <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <rect width="300" height="200" fill="#0a1008"/>
+            <!-- Restaurant interior suggestion -->
+            <rect x="0" y="0" width="300" height="100" fill="#080d08"/>
+            <rect x="0" y="100" width="300" height="100" fill="#0a120a"/>
+            <!-- Hanging light -->
+            <circle cx="150" cy="30" r="20" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+            <circle cx="150" cy="30" r="12" fill="rgba(201,168,76,0.25)"/>
+            <line x1="150" y1="0" x2="150" y2="10" stroke="rgba(201,168,76,0.4)" stroke-width="2"/>
+            <!-- Table surface -->
+            <rect x="50" y="120" width="200" height="8" rx="2" fill="#1a1008"/>
+            <!-- Place settings -->
+            <ellipse cx="150" cy="140" rx="50" ry="30" fill="#0d0808" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+            <rect x="95" y="130" width="3" height="50" rx="1.5" fill="rgba(201,168,76,0.4)" transform="rotate(-10,96.5,155)"/>
+            <rect x="208" y="130" width="3" height="50" rx="1.5" fill="rgba(201,168,76,0.4)" transform="rotate(10,209.5,155)"/>
+            <!-- Window glow -->
+            <rect x="20" y="20" width="60" height="70" fill="rgba(201,168,76,0.04)" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+            <rect x="220" y="20" width="60" height="70" fill="rgba(201,168,76,0.04)" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="g-overlay"><span class="g-overlay-icon">🔍</span></div>
+      </div>
+      <div class="g-item">
+        <div class="g-bg" style="background:#0d0810;height:100%;position:relative;">
+          <svg width="100%" height="100%" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <rect width="300" height="400" fill="#0a0810"/>
+            <!-- Dramatic plating - tall glass -->
+            <rect x="120" y="40" width="60" height="180" rx="4" fill="#0d0d18" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+            <!-- Drink -->
+            <rect x="122" y="42" width="56" height="170" rx="3" fill="rgba(192,57,43,0.15)"/>
+            <line x1="120" y1="90" x2="180" y2="90" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+            <!-- Ice cubes -->
+            <rect x="130" y="100" width="15" height="15" rx="2" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <rect x="152" y="110" width="15" height="15" rx="2" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <!-- Garnish top -->
+            <path d="M140 45 Q150 25 160 45" stroke="#6aab5a" stroke-width="2" fill="none"/>
+            <circle cx="143" cy="42" r="4" fill="#4a7c40"/>
+            <circle cx="157" cy="42" r="4" fill="#4a7c40"/>
+            <!-- Plate at bottom -->
+            <ellipse cx="150" cy="235" rx="80" ry="25" fill="#0d0808" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+            <ellipse cx="150" cy="232" rx="65" ry="18" fill="#111"/>
+            <!-- Small bites -->
+            <circle cx="120" cy="232" r="10" fill="#e8855a" opacity="0.7"/>
+            <circle cx="150" cy="229" r="10" fill="#8b1a3a" opacity="0.7"/>
+            <circle cx="178" cy="232" r="10" fill="#d4a840" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="g-overlay"><span class="g-overlay-icon">🔍</span></div>
+      </div>
+      <div class="g-item">
+        <div class="g-bg" style="background:#0d0808;height:100%;position:relative;">
+          <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <rect width="300" height="200" fill="#0d0808"/>
+            <!-- Hot roll close up -->
+            <rect x="30" y="50" width="240" height="100" rx="10" fill="#1a0e08" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+            <!-- Crispy fried rolls -->
+            <g transform="translate(55,100)"><rect x="-30" y="-30" width="50" height="55" rx="8" fill="#c9a84c" opacity="0.3"/><rect x="-27" y="-27" width="44" height="49" rx="6" fill="#8b6520" opacity="0.4"/></g>
+            <g transform="translate(105,100)"><rect x="-30" y="-30" width="50" height="55" rx="8" fill="#c9a84c" opacity="0.3"/><rect x="-27" y="-27" width="44" height="49" rx="6" fill="#8b6520" opacity="0.4"/></g>
+            <g transform="translate(155,100)"><rect x="-30" y="-30" width="50" height="55" rx="8" fill="#c9a84c" opacity="0.3"/><rect x="-27" y="-27" width="44" height="49" rx="6" fill="#8b6520" opacity="0.4"/></g>
+            <g transform="translate(205,100)"><rect x="-30" y="-30" width="50" height="55" rx="8" fill="#c9a84c" opacity="0.3"/><rect x="-27" y="-27" width="44" height="49" rx="6" fill="#8b6520" opacity="0.4"/></g>
+            <!-- Sauce drizzle -->
+            <path d="M40 58 Q80 70 120 58 Q160 45 200 58 Q240 70 260 58" stroke="#c9a84c" stroke-width="2" fill="none" opacity="0.6"/>
+            <path d="M40 65 Q70 75 100 65 Q130 55 160 65 Q190 75 220 65" stroke="#c02850" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <!-- Green onion sprinkle -->
+            <circle cx="50" cy="60" r="3" fill="#6aab5a" opacity="0.8"/>
+            <circle cx="90" cy="55" r="2.5" fill="#6aab5a" opacity="0.8"/>
+            <circle cx="140" cy="62" r="3" fill="#6aab5a" opacity="0.8"/>
+            <circle cx="190" cy="57" r="2.5" fill="#6aab5a" opacity="0.8"/>
+            <circle cx="240" cy="60" r="3" fill="#6aab5a" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="g-overlay"><span class="g-overlay-icon">🔍</span></div>
+      </div>
+      <div class="g-item">
+        <div class="g-bg" style="background:#0a0f0a;height:100%;position:relative;">
+          <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <rect width="300" height="200" fill="#080e08"/>
+            <!-- Edamame and appetizers -->
+            <rect x="20" y="40" width="120" height="120" rx="4" fill="#0d1208" stroke="rgba(201,168,76,0.12)" stroke-width="1"/>
+            <!-- Edamame pods -->
+            <ellipse cx="80" cy="80" rx="30" ry="18" fill="#4a7c40" opacity="0.8" transform="rotate(-20,80,80)"/>
+            <ellipse cx="70" cy="85" rx="25" ry="15" fill="#6aab5a" opacity="0.6" transform="rotate(-20,70,85)"/>
+            <ellipse cx="80" cy="115" rx="30" ry="18" fill="#4a7c40" opacity="0.8" transform="rotate(10,80,115)"/>
+            <ellipse cx="90" cy="100" rx="28" ry="16" fill="#6aab5a" opacity="0.6" transform="rotate(5,90,100)"/>
+            <!-- Gyoza tray -->
+            <rect x="160" y="40" width="120" height="120" rx="4" fill="#0d0a08" stroke="rgba(201,168,76,0.12)" stroke-width="1"/>
+            <ellipse cx="210" cy="90" rx="35" ry="22" fill="#c9a84c" opacity="0.25"/>
+            <path d="M180 90 Q210 70 240 90" stroke="#c9a84c" stroke-width="2" fill="none" opacity="0.5"/>
+            <ellipse cx="210" cy="110" rx="35" ry="22" fill="#c9a84c" opacity="0.2"/>
+            <path d="M180 110 Q210 90 240 110" stroke="#c9a84c" stroke-width="2" fill="none" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="g-overlay"><span class="g-overlay-icon">🔍</span></div>
+      </div>
+      <div class="g-item">
+        <div class="g-bg" style="background:#100d08;height:100%;position:relative;">
+          <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <rect width="300" height="200" fill="#100d08"/>
+            <!-- Miso soup and accompaniments -->
+            <ellipse cx="80" cy="100" rx="55" ry="55" fill="#0d0808" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+            <ellipse cx="80" cy="98" rx="45" ry="45" fill="#1a0d08"/>
+            <!-- Miso soup surface -->
+            <ellipse cx="80" cy="90" rx="38" ry="12" fill="#8b6520" opacity="0.3"/>
+            <circle cx="68" cy="88" r="8" fill="#4a7c40" opacity="0.6"/>
+            <circle cx="88" cy="85" r="5" fill="#f5f0e8" opacity="0.2"/>
+            <!-- Sides -->
+            <rect x="160" y="55" width="110" height="90" rx="4" fill="#0d0a08" stroke="rgba(201,168,76,0.12)" stroke-width="1"/>
+            <line x1="215" y1="55" x2="215" y2="145" stroke="rgba(201,168,76,0.1)" stroke-width="0.5"/>
+            <ellipse cx="188" cy="100" rx="22" ry="14" fill="#e8855a" opacity="0.6"/>
+            <ellipse cx="242" cy="100" rx="22" ry="14" fill="#8b1a3a" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="g-overlay"><span class="g-overlay-icon">🔍</span></div>
+      </div>
+      <div class="g-item">
+        <div class="g-bg" style="background:#0d0a10;height:100%;position:relative;">
+          <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <rect width="300" height="200" fill="#0a0810"/>
+            <!-- Dessert mochi -->
+            <ellipse cx="80" cy="110" rx="50" ry="40" fill="#1a1228" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+            <circle cx="60" cy="108" r="18" fill="#f5e6f5" opacity="0.7"/>
+            <circle cx="90" cy="105" r="18" fill="#f5c8c8" opacity="0.7"/>
+            <circle cx="75" cy="120" r="18" fill="#c8f5d8" opacity="0.6"/>
+            <!-- Matcha ice cream -->
+            <ellipse cx="220" cy="100" rx="55" ry="55" fill="#0d1008" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+            <ellipse cx="220" cy="90" rx="35" ry="35" fill="#2d5028" opacity="0.8"/>
+            <ellipse cx="218" cy="82" rx="28" ry="28" fill="#3d6535" opacity="0.9"/>
+            <!-- Topping -->
+            <circle cx="220" cy="72" r="8" fill="#c9a84c" opacity="0.6"/>
+            <path d="M200 60 Q220 48 240 60" stroke="#6aab5a" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div class="g-overlay"><span class="g-overlay-icon">🔍</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVAS -->
+<section id="reservas">
+  <div class="container">
+    <div class="reservas-inner">
+      <div class="reservas-info reveal">
+        <div class="section-tag">Faça sua reserva</div>
+        <h2>Reserve sua<br><em>mesa</em></h2>
+        <div class="divider"></div>
+        <p>Garanta seu lugar para uma experiência gastronômica inesquecível. Nossa equipe estará pronta para recebê-lo com toda a hospitalidade japonesa.</p>
+        <div class="info-items">
+          <div class="info-item">
+            <div class="info-icon">🕐</div>
+            <div class="info-item-text">
+              <div class="label">Horário</div>
+              <div class="val">Todos os dias<br>Aberto até 00h00</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">📍</div>
+            <div class="info-item-text">
+              <div class="label">Endereço</div>
+              <div class="val">R. Gen. Cláudio, 240<br>Marechal Hermes, Rio de Janeiro – RJ</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">📞</div>
+            <div class="info-item-text">
+              <div class="label">Telefone / WhatsApp</div>
+              <div class="val"><a href="https://wa.me/5521994881854" style="color:inherit;text-decoration:none;">(21) 99488-1854</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reserva-form reveal reveal-delay-1">
+        <h3>Fazer Reserva</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome completo</label>
+            <input type="text" id="f-nome" placeholder="Seu nome">
+          </div>
+          <div class="form-group">
+            <label>Telefone / WhatsApp</label>
+            <input type="tel" id="f-tel" placeholder="(21) 99999-9999">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Data</label>
+            <input type="date" id="f-data">
+          </div>
+          <div class="form-group">
+            <label>Horário</label>
+            <select id="f-hora">
+              <option value="">Selecione</option>
+              <option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option>
+              <option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option>
+              <option>21:00</option><option>21:30</option><option>22:00</option><option>22:30</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Número de pessoas</label>
+          <select id="f-pessoas">
+            <option value="">Selecione</option>
+            <option>1 pessoa</option><option>2 pessoas</option><option>3 pessoas</option>
+            <option>4 pessoas</option><option>5 pessoas</option><option>6 ou mais pessoas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Observações (opcional)</label>
+          <input type="text" id="f-obs" placeholder="Alergias, ocasião especial, etc.">
+        </div>
+        <button class="btn-submit" onclick="enviarReserva()">Confirmar Reserva via WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCALIZAÇÃO -->
+<section id="localizacao">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">Como chegar</div>
+      <h2>Nossa <em>Localização</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="map-inner">
+      <div class="map-info reveal">
+        <div class="map-detail">
+          <div class="map-label">Endereço</div>
+          <div class="map-val">R. Gen. Cláudio, 240<br>Marechal Hermes<br>Rio de Janeiro – RJ<br>CEP: 21610-390</div>
+        </div>
+        <div class="map-detail">
+          <div class="map-label">Funcionamento</div>
+          <div class="map-val">Segunda a Domingo<br>Aberto até 00h00</div>
+        </div>
+        <div class="map-detail">
+          <div class="map-label">Contato</div>
+          <div class="map-val">(21) 99488-1854<br>WhatsApp disponível</div>
+        </div>
+        <a href="https://maps.google.com/?q=R.+Gen.+Cláudio,+240,+Marechal+Hermes,+Rio+de+Janeiro" target="_blank" class="btn-primary" style="display:inline-block;margin-top:1rem;">Ver no Google Maps</a>
+      </div>
+      <div class="map-frame reveal reveal-delay-1">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3673.8!2d-43.38!3d-22.87!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997b0d4c8b1a27%3A0x0!2sR.+Gen.+Cl%C3%A1udio%2C+240+-+Marechal+Hermes%2C+Rio+de+Janeiro+-+RJ%2C+21610-390!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo-footer">試合 Shiai</span>
+        <p>Uma experiência gastronômica japonesa única no coração do Rio de Janeiro. Tradição, frescor e sofisticação em cada visita.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" title="Instagram">ig</a>
+          <a href="#" class="social-link" title="Facebook">fb</a>
+          <a href="https://wa.me/5521994881854" class="social-link" title="WhatsApp">wa</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Menu</h4>
+        <ul>
+          <li><a href="#cardapio">Sushi</a></li>
+          <li><a href="#cardapio">Sashimi</a></li>
+          <li><a href="#cardapio">Temaki</a></li>
+          <li><a href="#cardapio">Combos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Restaurante</h4>
+        <ul>
+          <li><a href="#sobre">Sobre nós</a></li>
+          <li><a href="#galeria">Galeria</a></li>
+          <li><a href="#reservas">Reservas</a></li>
+          <li><a href="#localizacao">Localização</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Horário</h4>
+        <ul>
+          <li>Seg – Dom</li>
+          <li>Aberto até 00h00</li>
+          <li style="color:rgba(245,240,235,0.3);margin-top:0.5rem;font-size:0.75rem;">(21) 99488-1854</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Shiai Culinária Japonesa. Todos os direitos reservados.</p>
+      <p style="color:rgba(201,168,76,0.3)">試合</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<div class="wa-float">
+  <div class="wa-bubble">💬 Fale conosco!</div>
+  <a href="https://wa.me/5521994881854?text=Olá!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Shiai%20Culinária%20Japonesa." target="_blank" class="wa-btn" title="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+</div>
+
+<script>
+  // NAV scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    const menu = document.getElementById('navmenu');
+    menu.classList.toggle('open');
+  }
+  document.querySelectorAll('#navmenu a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navmenu').classList.remove('open'));
+  });
+
+  // Menu tabs
+  function showTab(tab, btn) {
+    document.querySelectorAll('.menu-grid').forEach(g => g.classList.add('hidden'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.remove('hidden');
+    btn.classList.add('active');
+    // Re-trigger reveal animations
+    document.querySelectorAll('#tab-' + tab + ' .reveal').forEach(el => {
+      el.classList.remove('visible');
+      setTimeout(() => el.classList.add('visible'), 50);
+    });
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // WhatsApp reservation
+  function enviarReserva() {
+    const nome = document.getElementById('f-nome').value || 'Não informado';
+    const tel = document.getElementById('f-tel').value || 'Não informado';
+    const data = document.getElementById('f-data').value || 'Não informada';
+    const hora = document.getElementById('f-hora').value || 'Não informado';
+    const pessoas = document.getElementById('f-pessoas').value || 'Não informado';
+    const obs = document.getElementById('f-obs').value || 'Nenhuma';
+    const msg = `Olá! Gostaria de fazer uma reserva no Shiai Culinária Japonesa.%0A%0A*Nome:* ${nome}%0A*Telefone:* ${tel}%0A*Data:* ${data}%0A*Horário:* ${hora}%0A*Pessoas:* ${pessoas}%0A*Observações:* ${obs}`;
+    window.open(`https://wa.me/5521994881854?text=${msg}`, '_blank');
+  }
+
+  // Floating particles
+  function createParticles() {
+    const container = document.getElementById('particles');
+    const colors = ['rgba(201,168,76,0.15)', 'rgba(192,57,43,0.1)', 'rgba(245,240,235,0.08)'];
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 4 + 2;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random() * 100}%;
+        background:${colors[Math.floor(Math.random() * colors.length)]};
+        animation-duration:${Math.random() * 20 + 15}s;
+        animation-delay:${Math.random() * 10}s;
+      `;
+      container.appendChild(p);
+    }
+  }
+  createParticles();
+
+  // Set min date for reservation
+  const dateInput = document.getElementById('f-data');
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+  }
+</script>
+</body>
+</html>
